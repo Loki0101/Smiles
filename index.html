@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I wish for your smiles</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fff1de;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:radial-gradient(ellipse at 50% 40%,#2a1d14 0%,#0b0907 45%,#030403 100%);font-family:'Cormorant Garamond',Georgia,serif;color:var(--cream);-webkit-tap-highlight-color:transparent}
+#garden{position:fixed;inset:0;overflow:hidden}
+.f{position:absolute;overflow:visible;pointer-events:none;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes sway{from{transform:rotate(-1.2deg)}to{transform:rotate(1.2deg)}}
+.stem{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;animation:grow 1.1s ease-out both;animation-delay:var(--d)}
+.leaf{transform-origin:50% 50%;animation:pop .5s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--d) + .6s)}
+.bloom{transform-origin:50px 60px;animation:pop .9s cubic-bezier(.3,1.7,.5,1) both;animation-delay:calc(var(--d) + .85s)}
+@keyframes grow{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+#grass{position:fixed;left:0;right:0;bottom:0;width:100%;height:90px;pointer-events:none;transform-origin:50% 100%;animation:rise 2s ease-out both}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.words{position:fixed;z-index:10;left:50%;top:34%;transform:translate(-50%,-50%);width:min(92vw,720px);box-sizing:border-box;padding:28px 20px;text-align:center;pointer-events:none;border-radius:28px;background:rgba(4,5,4,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fffaf0;animation:boxin 2.2s ease-out 7s both}
+@keyframes boxin{from{opacity:0}to{opacity:1}}
+.cap{margin:0 0 .6rem;font-size:1rem;font-weight:600;letter-spacing:.28em;opacity:.85;animation:fade 2s ease-out 8.5s both}
+h1{margin:0;font-weight:700;font-size:clamp(2.2rem,9.5vw,4.4rem);line-height:1.1;text-shadow:0 2px 18px rgba(0,0,0,.8);animation:fade 2.4s ease-out 9.2s both}
+.sub{margin:.9rem 0 0;font-style:italic;font-weight:600;font-size:clamp(1.4rem,5.5vw,2.1rem);text-shadow:0 2px 14px rgba(0,0,0,.8);animation:fade 2.4s ease-out 11.8s both}
+.hint{margin-top:1.2rem;font-size:1.1rem;font-style:italic;opacity:.55;animation:fade 1.5s ease-out 12.5s both}
+.sp{position:fixed;width:3px;height:3px;border-radius:50%;background:#ffd9a0;box-shadow:0 0 8px 2px rgba(255,200,130,.7);pointer-events:none;animation:tw var(--t) ease-in-out infinite alternate}
+@keyframes tw{from{opacity:0;transform:translateY(0)}to{opacity:.9;transform:translateY(-24px)}}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.f,.stem,.leaf,.bloom,#grass,.words,h1,.cap,.sub,.hint,.sp{animation:none}}
+</style>
+</head>
+<body>
+<main id="garden" aria-label="A meadow of flowers blooming">
+  <div class="words">
+    <p class="cap">FOR YOU</p>
+    <h1>I wish for your smiles</h1>
+    <p class="sub">I like you and your smiles</p>
+  </div>
+</main>
+<svg id="grass" viewBox="0 0 600 90" preserveAspectRatio="none" aria-hidden="true"></svg>
+<script>
+(function(){
+  var garden=document.getElementById('garden');
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function pick(a){return a[Math.floor(Math.random()*a.length)]}
+  var greens=['#5fae6b','#4a9560','#7cc77f','#3f8353'];
+  var roses=[['#f6b2c2','#ec7f9a','#d9566f'],['#fbd9cf','#f4a6a0','#e6797f'],['#fde8e0','#f7c4c0','#eea0a8'],['#f29bb5','#e0668a','#c4426a']];
+
+  function sunflower(g){
+    var n=16,l,i,k;
+    for(l=0;l<2;l++)for(i=0;i<n;i++)
+      el('ellipse',{cx:50,cy:40,rx:5.5,ry:12,fill:l?'#ffd23f':'#f0a800',transform:'rotate('+(360/n*i+l*11)+' 50 60)'},g);
+    el('circle',{cx:50,cy:60,r:12.5,fill:'#5b3416'},g);
+    for(k=1;k<14;k++){var r=Math.sqrt(k)*3.1,a=k*2.4;el('circle',{cx:50+r*Math.cos(a),cy:60+r*Math.sin(a),r:1.3,fill:'#2e180a'},g)}
+  }
+  function rose(g){
+    var c=pick(roses),i;
+    for(i=0;i<6;i++){var a=i*Math.PI/3;el('circle',{cx:50+14*Math.cos(a),cy:60+14*Math.sin(a),r:13,fill:c[0]},g)}
+    for(i=0;i<5;i++){var b=i*2*Math.PI/5+.5;el('circle',{cx:50+8*Math.cos(b),cy:60+8*Math.sin(b),r:10,fill:c[1]},g)}
+    el('circle',{cx:50,cy:60,r:9,fill:c[2]},g);
+    el('path',{d:'M50 60 m-3 0 a3 3 0 1 1 3 3 a6 6 0 1 1 -7 -7',fill:'none',stroke:'rgba(110,25,55,.5)','stroke-width':1.4,'stroke-linecap':'round'},g);
+  }
+  function daisy(g){
+    for(var i=0;i<9;i++)el('ellipse',{cx:50,cy:45,rx:5,ry:11,fill:'#fff6ec',transform:'rotate('+(40*i)+' 50 60)'},g);
+    el('circle',{cx:50,cy:60,r:6.5,fill:'#ffc93c'},g);
+  }
+  function bud(g){
+    var c=pick(['#f4a6b8','#ec7f9a','#ffd9c9']);
+    el('circle',{cx:50,cy:60,r:7,fill:c},g);el('circle',{cx:48,cy:58,r:3,fill:'rgba(255,255,255,.35)'},g);
+  }
+
+  function plant(x,bloomY,delay,type){
+    var H=garden.clientHeight,W=garden.clientWidth,t=type||pick(['s','s','r','r','r','r','d','b','b']);
+    var depth=Math.min(1,Math.max(0,(bloomY/H-.05)/.85));
+    var base=t==='b'?rnd(40,55):t==='d'?rnd(55,70):rnd(80,115);
+    var w=base*(.75+depth*.5)*(W<500?.8:1.1),s=w/100;
+    var top=bloomY-60*s,hs=H-top,L=hs/s;
+    var svg=el('svg',{class:'f',viewBox:'0 0 100 '+L,width:w,height:hs,'aria-hidden':'true'});
+    if(depth<.45){svg.style.filter='blur('+((.45-depth)*5).toFixed(1)+'px)';svg.style.opacity=(.4+depth).toFixed(2)}
+    svg.style.left=(x-w/2)+'px';svg.style.top=top+'px';svg.style.setProperty('--d',delay+'ms');
+    var sw=rnd(-16,16);
+    el('path',{class:'stem',pathLength:1,stroke:pick(greens),'stroke-width':t==='b'?1.8:2.6,d:'M50 '+L+' C '+(50+sw)+' '+(L*.75)+' '+(50-sw)+' '+(L*.4)+' 50 62'},svg);
+    if(t!=='b'){
+      var ly=60+(L-60)*rnd(.4,.65),lc=pick(greens);
+      el('ellipse',{class:'leaf',cx:36,cy:ly,rx:13,ry:5,fill:lc,transform:'rotate(-30 36 '+ly+')'},svg);
+      el('ellipse',{class:'leaf',cx:64,cy:ly+16,rx:13,ry:5,fill:lc,transform:'rotate(30 64 '+(ly+16)+')'},svg);
+    }
+    var g=el('g',{class:'bloom'},svg);
+    ({s:sunflower,r:rose,d:daisy,b:bud})[t](g);
+    garden.appendChild(svg);
+  }
+
+  var gr=document.getElementById('grass'),i;
+  for(i=0;i<36;i++){var sp=document.createElement('div');sp.className='sp';sp.style.left=rnd(0,100)+'%';sp.style.top=rnd(10,92)+'%';sp.style.setProperty('--t',rnd(2,5)+'s');sp.style.animationDelay=rnd(0,3)+'s';document.body.appendChild(sp)}
+  for(i=0;i<170;i++){
+    var x=rnd(-5,605),h=rnd(25,85),w=rnd(2,5),ln=rnd(-16,16);
+    el('path',{d:'M'+(x-w)+' 90 Q'+(x-w/2+ln*.4)+' '+(90-h*.6)+' '+(x+ln)+' '+(90-h)+' Q'+(x+w/2+ln*.4)+' '+(90-h*.5)+' '+(x+w)+' 90Z',fill:pick(['#2f6e3f','#3f8a50','#265a34','#56a864'])},gr);
+  }
+
+  var H=garden.clientHeight,W=garden.clientWidth,count=W<500?38:72,items=[];
+  for(i=0;i<count;i++)items.push({x:(i+.5)/count*W+rnd(-18,18),y:rnd(H*.08,H*.88),d:rnd(200,5200)});
+  items.sort(function(a,b){return a.y-b.y});
+  items.forEach(function(o){plant(o.x,o.y,o.d)});
+  garden.addEventListener('pointerdown',function(e){plant(e.clientX,Math.min(e.clientY,garden.clientHeight-100),0)});
+})();
+</script>
+</body>
+</html>
